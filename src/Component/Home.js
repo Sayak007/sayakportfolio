@@ -26,6 +26,7 @@ class Home extends Component {
       card_image:"",
       card_title:"",
       card_desc:"",
+      card_id:"",
     });
     this.authListener = this.authListener.bind(this);
     this.update=this.update.bind(this);
@@ -41,7 +42,6 @@ class Home extends Component {
     db.collection("user").onSnapshot((snapshot) =>
       this.setState({details:snapshot.docs.map((doc) => doc.data())})
     );
-    console.log(this.state.details);
   }
 
   authListener() {
@@ -58,20 +58,44 @@ class Home extends Component {
   }
 
   card_loader(){
-    db.collection("service_cards").onSnapshot((snapshot) =>
+    db.collection("service_cards").orderBy('card_id','desc').onSnapshot((snapshot) =>
       this.setState({card_content:snapshot.docs.map((doc) => doc.data())})
     );
   }
-  add(){
+  async add(){
+    var cardid = this.state.card_id;
     var img=this.state.card_image;
     var title=this.state.card_title;
     var desc=this.state.card_desc;
-    db.collection('service_cards').add({
-      image:img,
-      title:title,
-      description: desc,
-    });
-    this.setState({card_desc:"",card_title:"",card_image:""});
+    const service_cards_ref = db.collection('service_cards');
+    const snapshot = await service_cards_ref.where('card_id', '==', cardid).get();
+    //console.log(snapshot)
+    if (!snapshot.empty) {
+      await service_cards_ref.where('card_id', '==', cardid).get().then(response=>{
+        response.docs.forEach((doc) => {
+          
+            const docRef = db.collection('service_cards').doc(doc.id)
+            //console.log(doc.data().description)
+            docRef.update({
+              card_id: cardid,
+              image:(img===""?doc.data().image:img),
+              title:(title===""?doc.data().title:title),
+              description: (desc===""?doc.data().description:desc),
+            })
+        })
+      })
+    }else{
+      service_cards_ref.add({
+        card_id: cardid,
+        image:img,
+        title:title,
+        description: desc,
+      }).catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+      });
+    }
+    this.setState({card_id:"",card_desc:"",card_title:"",card_image:""});
   }
 
   update(){
@@ -125,13 +149,13 @@ class Home extends Component {
             <div className="row d-flex justify-content-center">
               <div className="col-11 mx-auto ">
                 {this.state.details.map(details=>
-                <div className="row base-card justify-content-md-center animate">
+                <div className="row base-card justify-content-md-center ">
                   <div className="col-md-6 centerh">
-                    <img src={details.image} className="img-fluid animate img" alt="Image"/>
+                    <img src={details.image} className="img-fluid img" alt="Image"/>
                   
                   </div>
                   
-                  <div className="col-md-6 centerh centerv animate">
+                  <div className="col-md-6 centerh centerv">
                     <h1 style={{fontSize:"72px"}}>
                       <strong>{details.name}</strong>
                     </h1>
@@ -151,40 +175,30 @@ class Home extends Component {
                       <IconButton><a target="_blank" href="https://twitter.com/KSayak10"><TwitterIcon color="primary"/></a></IconButton>
                     </div>
                   </div>
-                  {this.state.user?(<a className="btn btn-primary col-sm-1 fl" href="#baseModal" classname="trigger-btn" data-toggle="modal"><AddCircleIcon/></a>):""}
+                  {this.state.user?(<a className="btn btn-primary col-sm-1 fl" data-bs-target="#baseModal" data-bs-toggle="modal"><AddCircleIcon/></a>):""}
                 </div>
                 )}
               </div>
               <div style={{marginTop:"70px"}}></div>    
-              <div className="separator animate"><h1><strong>Expertise</strong></h1></div>       
-              <div className="col-md-10 mx-auto" style={{marginTop:"50px"}}>
+              <div className="separator"><h1><strong>Expertise</strong></h1></div>  
+              <div className="mx-auto col-md-10">{this.state.user?(<a className="btn btn-primary col-sm-1 fl trigger-btn" data-bs-target="#cardModal" data-bs-toggle="modal"><AddCircleIcon/></a>):""}     </div>
+              <div className="col-md-10 mx-auto" style={{marginTop:"50px", marginBottom:"50px"}}>
                 <div className="row justify-content-center d-flex">
                 {this.state.card_content.map(content=>
                   <div className="col-md-4 d-flex" style={{padding:"10px"}}>
-                    <div className="col-md-11 base-card animate mx-auto" style={{backgroundColor:this.state.card_colors[Math.floor(Math.random()*5)]}}>
-                    <div className="row justify-content-center">
-                      <img className="img-fluid animate imgg" style={{width:"175px",height:"150px"}} src={content.image}/>
-                    </div>
-                    <div className="row justify-content-center animate" style={{textAlign:"center"}}>
-                      <h3><strong>{content.title}</strong></h3>
-                      <p>{content.description}</p>
+                    <div className="col-md-11 base-card mx-auto outline-primary exp-card" style={{border:"1px solid #4285F4"}}>
+                    <div className="row justify-content-center d-flex my-auto">
+                      <div className='col-md-2'>
+                        <img className="img-fluid imgg" style={{width:"80px",height:'auto'}} src={content.image}/>
+                      </div>
+                      <div className='col-md-10'>
+                        <h3><strong>{content.title}</strong></h3>
+                        <p className="overflow-auto scroll-exp" style={{height:"250px", paddingRight:"10px"}}>{content.description}</p>
+                      </div>
                     </div>
                     </div>
                   </div>
                 )}
-                {this.state.user?(
-                  <div className="col-md-4 centerv trigger-btn hov" href="#cardModal" data-toggle="modal">
-                    <div className="col-md-11 base-card animate mx-auto bg-primary hov1" style={{cursor:'pointer'}}>
-                    <div className="row justify-content-center">
-                      <img className="img-fluid animate imgg" style={{width:"175px",height:"150px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS8yLQ36QZHcE6IEzCByX4d1xAWFDq5K8hvcg&usqp=CAU"/>
-                    </div>
-                    <div className="row justify-content-center animate" style={{textAlign:"center"}}>
-                      <h3 style={{color:"white"}}><strong>Add new expertise</strong></h3>
-                      
-                    </div>
-                    </div>
-                  </div>):("")}
-
                 </div>
               </div>
             </div>
@@ -198,7 +212,7 @@ class Home extends Component {
                             <img src="https://img.icons8.com/color/48/000000/administrator-male--v1.png" alt="Avatar"/>
                           </div>				
                           <h4 className="modal-title">Basic Details</h4>	
-                                  <button type="button" className="close btn-outline-danger" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <button type="button" className="close btn-outline-danger" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div className="modal-body">
                           
@@ -219,7 +233,7 @@ class Home extends Component {
                             </div>  
                             <br/>    
                             <div className="form-group">
-                              <button onClick={this.update}  className="btn btn-primary btn-lg btn-block login-btn" data-dismiss="modal">Update</button>
+                              <button onClick={this.update}  className="btn btn-primary btn-lg btn-block login-btn" data-bs-dismiss="modal">Update</button>
                             </div>
                           
                         </div>
@@ -237,10 +251,13 @@ class Home extends Component {
                             <img src="https://img.icons8.com/color/48/000000/administrator-male--v1.png" alt="Avatar"/>
                           </div>				
                           <h4 className="modal-title">Add Expertise</h4>	
-                                  <button type="button" className="close btn-outline-danger" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <button type="button" className="close btn-outline-danger" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div className="modal-body">
-                          
+                            <div className="form-group">
+                              <input value={this.state.card_id} onChange={e => this.setState({ card_id: e.target.value })} type="number" className="form-control" name="cardid" placeholder="Card Id" required="required"/>		
+                            </div>
+                            <br/>
                             <div className="form-group">
                               <input value={this.state.card_image} onChange={e => this.setState({ card_image: e.target.value })} type="text" className="form-control" name="username" placeholder="Image" required="required"/>		
                             </div>
@@ -254,7 +271,7 @@ class Home extends Component {
                             </div>
                             <br/> 
                             <div className="form-group">
-                              <button onClick={this.add}  className="btn btn-primary btn-lg btn-block login-btn" data-dismiss="modal">Add</button>
+                              <button onClick={this.add}  className="btn btn-primary btn-lg btn-block login-btn" data-bs-dismiss="modal">Add</button>
                             </div>
                           
                         </div>
