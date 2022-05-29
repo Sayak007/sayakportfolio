@@ -3,6 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from "react-router-dom";
 import "./Navbar.css";
 import {firebaseApp} from "../firebase.js";
+import HomeIcon from '@material-ui/icons/Home';
+import WorkIcon from '@material-ui/icons/Work';
+import ContactMailIcon from '@material-ui/icons/ContactMail'
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined'
 
 class Navbar extends Component {
   constructor(props) {
@@ -62,13 +66,16 @@ class Navbar extends Component {
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                   <li className="nav-item" key="1">
-                    <NavLink activeClassName="menu_active" className="nav-link" aria-current="page" to="/home">Home</NavLink>
+                    <NavLink activeClassName="menu_active" className="nav-link" aria-current="page" to="/home"><HomeIcon/> Home</NavLink>
                   </li>
                   <li className="nav-item" key="2">
-                    <NavLink activeClassName="menu_active" className="nav-link" to="/experience">Experiences</NavLink>
+                    <NavLink activeClassName="menu_active" className="nav-link" to="/experience"><WorkIcon/> Experiences</NavLink>
                   </li>
                   <li className="nav-item" key="3">
-                    <NavLink activeClassName="menu_active" className="nav-link" to="/contact">Contact</NavLink>
+                    <NavLink activeClassName="menu_active" className="nav-link" to="/project"><AssignmentOutlinedIcon/> Project</NavLink>
+                  </li>
+                  <li className="nav-item" key="4">
+                    <NavLink activeClassName="menu_active" className="nav-link" to="/contact"><ContactMailIcon/> Contact</NavLink>
                   </li>
                 </ul>
                 

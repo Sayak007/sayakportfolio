@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../Css/Home.css';
+import '../animate/animate';
+import '../animate/animate.css';
 import db,{firebaseApp} from "../firebase.js";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {IconButton} from "@material-ui/core";
@@ -9,6 +11,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 
 class Home extends Component {
@@ -143,13 +146,13 @@ class Home extends Component {
 
   render(){
     return (
-      <div className="home">
+      <div className="home gray-bg">
         <section id="header" className="">
           <div className="container-fluid" style={{marginTop:"30px"}}>
-            <div className="row d-flex justify-content-center">
+            <div className="row d-flex justify-content-center mx-auto">
               <div className="col-11 mx-auto ">
                 {this.state.details.map(details=>
-                <div className="row base-card justify-content-md-center ">
+                <div className="row base-card justify-content-md-center">
                   <div className="col-md-6 centerh">
                     <img src={details.image} className="img-fluid img" alt="Image"/>
                   
@@ -161,7 +164,7 @@ class Home extends Component {
                     </h1>
                     <h5 style={{color:'#0275d8'}}>{details.designation}</h5>
                     <br/>
-                    <p>{details.about}</p>
+                    <pre style={{whiteSpace: 'pre-wrap', maxHeight:"150px",overflowY:"auto", textAlign:"left"}} className="overflowY-auto scroll-exp">{details.about}</pre>
                     <div className="mt-3">
                       <a target="_blank" href={details.resume} className="btn btn-outline-primary">
                         Get Resume
@@ -186,20 +189,25 @@ class Home extends Component {
                 <div className="row justify-content-center d-flex">
                 {this.state.card_content.map(content=>
                   <div className="col-md-4 d-flex" style={{padding:"10px"}}>
-                    <div className="col-md-11 base-card mx-auto outline-primary exp-card" style={{border:"1px solid #4285F4"}}>
+                    <div className="col-md-11 base-card mx-auto outline-primary exp-card reveal" style={{border:"1px solid #4285F4", cursor:"pointer"}}>
                     <div className="row justify-content-center d-flex my-auto">
-                      <div className='col-md-2'>
-                        <img className="img-fluid imgg" style={{width:"80px",height:'auto'}} src={content.image}/>
+                      <div className='col-md-3'>
+                        <img className="img-fluid imgg" style={{width:"80px",height:'auto', marginBottom:"10px"}} src={content.image}/>
                       </div>
-                      <div className='col-md-10'>
+                      <div className='col-md-9'>
                         <h3><strong>{content.title}</strong></h3>
-                        <p className="overflow-auto scroll-exp" style={{height:"250px", paddingRight:"10px"}}>{content.description}</p>
                       </div>
+                    </div>
+                    <div className='row justify-content-center d-flex my-auto'>
+                      <pre style={{whiteSpace: 'pre-wrap',height:"250px", paddingRight:"10px"}} className="overflowY-auto scroll-exp">{content.description}</pre>
                     </div>
                     </div>
                   </div>
                 )}
                 </div>
+              </div>
+              <div className='mb-5 mx-auto text-center'>
+                <a className='btn btn-primary btn-lg mx-auto autoscreen' href="/#/contact">Hire me <ArrowForwardIcon/></a>
               </div>
             </div>
           </div>
@@ -221,7 +229,7 @@ class Home extends Component {
                             </div>
                             <br/>
                             <div className="form-group">
-                              <input value={this.state.about} onChange={e => this.setState({ about: e.target.value })} type="text" className="form-control" name="password" placeholder="About" required="required"/>	
+                              <textarea value={this.state.about} onChange={e => this.setState({ about: e.target.value })} type="text" className="form-control" name="password" placeholder="About" required="required" rows="4"/>	
                             </div> 
                             <br/> 
                             <div className="form-group">
@@ -267,7 +275,7 @@ class Home extends Component {
                             </div> 
                             <br/> 
                             <div className="form-group">
-                              <input value={this.state.card_desc} onChange={e => this.setState({ card_desc: e.target.value })} type="text" className="form-control" name="password" placeholder="Description" required="required"/>	
+                              <textarea value={this.state.card_desc} onChange={e => this.setState({ card_desc: e.target.value })} type="text" className="form-control" name="password" placeholder="Description" required="required" rows="2"/>	
                             </div>
                             <br/> 
                             <div className="form-group">

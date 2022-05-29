@@ -9,6 +9,7 @@ import Home from "./Component/Home.js";
 import Navbar from "./Navbar/Navbar.js";
 import Experiences from "./Component/Experiences.js";
 import Contact from './Component/Contact';
+import Projects from './Component/Projects'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/" component={Home}/>
         <Route exact path="/home" component={Home}/>
         <Route exact path="/experience" component={Experiences}/>
+        <Route exact path="/project" component={Projects}/>
         <Route exact path="/contact" component={Contact}/>
         <Redirect to="/"/>
       </Switch>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import db,{firebaseApp} from "../firebase.js";
 import '../Css/Experience.css';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import '../animate/animate';
+import '../animate/animate.css';
 
 
 class Experiences extends Component {
@@ -125,7 +127,8 @@ class Experiences extends Component {
                         <div className="resume-box">
                             <ul>
                               {this.state.exp_content.map(content=>
-                                <li key={content.exp_id}>
+                                
+                                <li key={this.state.exp_content.length-content.exp_id+1} className={(this.state.exp_content.length-content.exp_id+1===1 || this.state.exp_content.length-content.exp_id+1===2) ?"":"reveal"}>
                                     <div className="icon">
                                         <img src={content.exp_image} style={{width:"40px",borderRadius:"50%",}}></img>
                                     </div>
