@@ -31,7 +31,7 @@ class Contact extends Component{
     }
     authListener() {
         firebaseApp.auth().onAuthStateChanged((user) => {
-          console.log(user);
+          
           if (user) {
             this.setState({ user });
             localStorage.setItem('user', user.uid);
@@ -118,7 +118,7 @@ class Contact extends Component{
     }
 
     render(){ return (
-        <div className='contact'>
+        <div className='contact' style={{marginTop: '80px'}}>
             <div className="container-fluid" style={{marginTop:"30px"}}>
                 <div className="crd mx-auto ">
                     <h3><b>Want to Connect? Send a Message Here</b></h3>
@@ -150,7 +150,7 @@ class Contact extends Component{
                                         <EmailOutlinedIcon className='text-warning'/>
                                     </div>
                                     <div style={{marginLeft:"7px"}}>
-                                        <h6>dsayak10@gmail.com</h6>
+                                        <h6>dsksayak10@outlook.com</h6>
                                     </div>
                                 </div>
                                 <br/>

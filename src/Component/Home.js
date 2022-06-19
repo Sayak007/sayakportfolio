@@ -49,7 +49,6 @@ class Home extends Component {
 
   authListener() {
     firebaseApp.auth().onAuthStateChanged((user) => {
-      console.log(user);
       if (user) {
         this.setState({ user });
         localStorage.setItem('user', user.uid);
@@ -146,9 +145,9 @@ class Home extends Component {
 
   render(){
     return (
-      <div className="home gray-bg">
+      <div className="home gray-bg" style={{marginTop: '80px'}}>
         <section id="header" className="">
-          <div className="container-fluid" style={{marginTop:"30px"}}>
+          <div className="container-fluid gray-bg" style={{paddingTop:"30px"}}>
             <div className="row d-flex justify-content-center mx-auto">
               <div className="col-11 mx-auto ">
                 {this.state.details.map(details=>
@@ -166,16 +165,16 @@ class Home extends Component {
                     <br/>
                     <pre style={{whiteSpace: 'pre-wrap', maxHeight:"150px",overflowY:"auto", textAlign:"left"}} className="overflowY-auto scroll-exp">{details.about}</pre>
                     <div className="mt-3">
-                      <a target="_blank" href={details.resume} className="btn btn-outline-primary">
+                      <a target="_blank" href={details.resume} className="btn btn-outline-primary" style={{borderRadius:"20px"}}>
                         Get Resume
                       </a>
                     </div>
                     <div className="mt-3 social">
-                      <IconButton><a target="_blank" href="https://www.linkedin.com/in/sayak-das-041374188/"><LinkedInIcon color="primary"/></a></IconButton>
-                      <IconButton><a target="_blank" href="https://github.com/Sayak007"><GitHubIcon color="primary"/></a></IconButton>
-                      <IconButton><a target="_blank" href="https://www.facebook.com/sayak.das.735"><FacebookIcon color="primary"/></a></IconButton>
-                      <IconButton><a target="_blank" href="https://www.instagram.com/d._sayak/"><InstagramIcon color="primary"/></a></IconButton>
-                      <IconButton><a target="_blank" href="https://twitter.com/KSayak10"><TwitterIcon color="primary"/></a></IconButton>
+                      <IconButton><a target="_blank" className="icon" href="https://www.linkedin.com/in/sayak-das-041374188/"><LinkedInIcon color="primary"/></a></IconButton>
+                      <IconButton><a target="_blank" className="icon" href="https://github.com/Sayak007"><GitHubIcon color="primary"/></a></IconButton>
+                      <IconButton><a target="_blank" className="icon" href="https://www.facebook.com/sayak.das.735"><FacebookIcon color="primary"/></a></IconButton>
+                      <IconButton><a target="_blank" className="icon" href="https://www.instagram.com/d._sayak/"><InstagramIcon color="primary"/></a></IconButton>
+                      <IconButton><a target="_blank" className="icon" href="https://twitter.com/KSayak10"><TwitterIcon color="primary"/></a></IconButton>
                     </div>
                   </div>
                   {this.state.user?(<a className="btn btn-primary col-sm-1 fl" data-bs-target="#baseModal" data-bs-toggle="modal"><AddCircleIcon/></a>):""}
@@ -207,7 +206,7 @@ class Home extends Component {
                 </div>
               </div>
               <div className='mb-5 mx-auto text-center'>
-                <a className='btn btn-primary btn-lg mx-auto autoscreen' href="/#/contact">Hire me <ArrowForwardIcon/></a>
+                <a className='btn btn-primary btn-lg mx-auto ' style={{borderRadius:"40px"}} href="/#/contact">Hire me <ArrowForwardIcon/></a>
               </div>
             </div>
           </div>

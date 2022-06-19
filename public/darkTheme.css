@@ -1,0 +1,3 @@
+iframe, img, html{
+    -webkit-filter: invert() hue-rotate(180deg) brightness(105%) contrast(105%);
+}

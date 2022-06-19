@@ -1,0 +1,25 @@
+.meter{
+    position: relative;
+    padding: 7px;
+    border: 1px solid #4285F4;
+    height: 100px;
+}
+.pg{
+    height: fit-content;
+    border-radius: 16px;
+    padding: 10px;
+}
+.pgout{
+    border-radius: 16px;
+}
+.skillimage{
+    width: 45px;
+    height: 45px;
+    object-fit: scale-down;
+}
+.skill-card{
+    cursor: pointer;
+}
+.skill-card:hover{
+    border:3px solid #4285F4;
+}

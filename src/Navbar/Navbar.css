@@ -85,3 +85,55 @@
 	display: inline-block;
 	margin: 10px auto;
 }
+@media only screen and (min-width: 990px) {
+	.right-end{
+		position: absolute;
+		right: 5px;
+	}
+	
+}
+
+.dark-mode{
+	position: absolute;
+	left: 120px;
+	top: 15px;
+	border-radius: 50%;
+	background-color: #363636;
+	padding: 6px;
+	color: white;
+	cursor: pointer;
+}
+.dark-mode:hover{
+	background-color: #000000;
+}
+.light-mode{
+	position: absolute;
+	left: 120px;
+	top: 15px;
+	border-radius: 50%;
+	background-color: #000000;
+	padding: 6px;
+	color: rgb(189, 174, 42);
+	filter: invert() hue-rotate(180deg) brightness(100%) contrast(100%);
+	cursor: pointer;
+}
+.light-mode:hover{
+	border: 2px solid #0275d8;
+}
+
+@media only screen and (max-width: 990px) {
+	.dark-mode{
+		left:43%
+	}
+	.light-mode{
+		left:43%
+	}
+}
+
+.Navv{
+	z-index: 10000;
+   position: fixed;
+   top: 0px;
+   width: 100%;
+   margin-bottom: 200px;
+}

@@ -40,11 +40,10 @@ class Experiences extends Component {
     db.collection("user").onSnapshot((snapshot) =>
       this.setState({details:snapshot.docs.map((doc) => doc.data())})
     );
-    console.log(this.state.details);
   }
   authListener() {
     firebaseApp.auth().onAuthStateChanged((user) => {
-      console.log(user);
+      
       if (user) {
         this.setState({ user });
         localStorage.setItem('user', user.uid);
@@ -111,7 +110,7 @@ class Experiences extends Component {
   }
 
   render(){ return(
-    <div className="experience">
+    <div className="experience" style={{marginTop: '80px'}}>
       <section className="section gray-bg" id="resume">
             <div className="container">
                 <div className="row">

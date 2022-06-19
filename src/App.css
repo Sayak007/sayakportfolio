@@ -3,6 +3,11 @@
   text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
+/*@media (prefers-color-scheme: dark){
+  iframe, img, html{
+    -webkit-filter: invert() hue-rotate(180deg) brightness(105%) contrast(105%);
+  }
+}*/
 
 .App-logo {
   height: 40vmin;

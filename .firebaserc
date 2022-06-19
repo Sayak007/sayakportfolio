@@ -1,5 +1,11 @@
 {
-  "projects": {
-    "default": "portfolio-f7924"
+  "targets": {
+    "portfolio-f7924": {
+      "hosting": {
+        "prod": [
+          "sayakportfolio"
+        ]
+      }
+    }
   }
 }
